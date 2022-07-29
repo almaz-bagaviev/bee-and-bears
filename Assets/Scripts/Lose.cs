@@ -16,9 +16,8 @@ public class Lose : MonoBehaviour
         if (collision.gameObject.CompareTag("Bear") || collision.gameObject.CompareTag("Let"))
         {
             AnimCamera.SetBool("isCameraGo", true);
-            Debug.Log("Коллизия произошла");
+            print("Коллизия произошла");
             LoseBee = false;
-
         }
     }
 }

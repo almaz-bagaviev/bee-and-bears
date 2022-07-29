@@ -8,7 +8,6 @@ public class Exit : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape))
             {
-                Debug.Log("Выход из игры");
                 Application.Quit();
                 return;
             }

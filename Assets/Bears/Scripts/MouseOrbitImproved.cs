@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [AddComponentMenu("Camera-Control/Mouse Orbit with zoom")]
 public class MouseOrbitImproved : MonoBehaviour
@@ -16,13 +15,12 @@ public class MouseOrbitImproved : MonoBehaviour
     public float distanceMin = .5f;
     public float distanceMax = 15f;
 
-    private Rigidbody rb;
+    Rigidbody rb;
 
-    float x = 0.0f;
-    float y = 0.0f;
+    float x = 0f;
+    float y = 0f;
 
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
@@ -31,13 +29,10 @@ public class MouseOrbitImproved : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         // Make the rigid body not change rotation
-        if (rb != null)
-        {
-            rb.freezeRotation = true;
-        }
+        if (rb != null) rb.freezeRotation = true;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (target)
         {
@@ -51,11 +46,10 @@ public class MouseOrbitImproved : MonoBehaviour
             distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
 
             RaycastHit hit;
-            if (Physics.Linecast(target.position, transform.position, out hit))
-            {
-                distance -= hit.distance;
-            }
-            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
+
+            if (Physics.Linecast(target.position, transform.position, out hit)) distance -= hit.distance;
+
+            Vector3 negDistance = new Vector3(0f, 0f, -distance);
             Vector3 position = rotation * negDistance + target.position;
 
             transform.rotation = rotation;
@@ -65,10 +59,10 @@ public class MouseOrbitImproved : MonoBehaviour
 
     public static float ClampAngle(float angle, float min, float max)
     {
-        if (angle < -360F)
-            angle += 360F;
-        if (angle > 360F)
-            angle -= 360F;
+        if (angle < -360F) angle += 360F;
+
+        if (angle > 360F) angle -= 360F;
+
         return Mathf.Clamp(angle, min, max);
     }
 }

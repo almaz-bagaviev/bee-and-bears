@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Enums;
+using System.Collections;
 using UnityEngine;
 
 public class Bee2 : MonoBehaviour
@@ -19,43 +20,15 @@ public class Bee2 : MonoBehaviour
         SwipeManagerScript.instance.MoveEvent += MoveBee;
     }
 
-
-    /*private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A) && pointFinish > -LaneOffset)
-        {
-            MoveHorizontal(-LaneChangeSpeed);
-        }
-
-        if (Input.GetKeyDown(KeyCode.D) && pointFinish < LaneOffset)
-        {
-            MoveHorizontal(LaneChangeSpeed);
-        }
-
-        if (Input.GetKeyDown(KeyCode.W) && isJumping == false)
-        {
-            Jump();
-        }
-    }*/
-
     private void MoveBee(bool[] swipes)
     {
-        if (swipes[(int) SwipeManagerScript.Direction.Left] && pointFinish > -LaneOffset)
-        {
-            MoveHorizontal(-LaneChangeSpeed);
-        }
+        if (swipes[(int)Direction.Left] && pointFinish > -LaneOffset) MoveHorizontal(-LaneChangeSpeed);
 
-        if (swipes[(int)SwipeManagerScript.Direction.Right] && pointFinish < LaneOffset)
-        {
-            MoveHorizontal(LaneChangeSpeed);
-        }
+        if (swipes[(int)Direction.Right] && pointFinish < LaneOffset) MoveHorizontal(LaneChangeSpeed);
 
-        if (swipes[(int)SwipeManagerScript.Direction.Up] && isJumping == false)
-        {
-            Jump();
-        }
+        if (swipes[(int)Direction.Up] && isJumping == false) Jump();
     }
-    
+
     private void Jump()
     {
         isJumping = true;
@@ -64,14 +37,14 @@ public class Bee2 : MonoBehaviour
         StartCoroutine(StopJumpCoroutine());
     }
 
-    IEnumerator StopJumpCoroutine()
+    private IEnumerator StopJumpCoroutine()
     {
         do
         {
             yield return new WaitForFixedUpdate();
         }
-        while
-        (rb.velocity.y != 0);
+        while (rb.velocity.y != 0);
+
         isJumping = false;
         Physics.gravity = new Vector3(0, realGravity, 0);
     }
@@ -86,41 +59,29 @@ public class Bee2 : MonoBehaviour
             StopCoroutine(GoingCoroutine);
             isMoving = false;
         }
-        GoingCoroutine = StartCoroutine(MoveGo(speed));
 
+        GoingCoroutine = StartCoroutine(MoveGo(speed));
         targetVelocity = new Vector3(-LaneChangeSpeed, 0, 0);
     }
 
 
-        IEnumerator MoveGo(float vectorX)
-        {
-            isMoving = true;
-            while (Mathf.Abs(pointStart - transform.position.x) < LaneOffset)
-            {
-                yield return new WaitForFixedUpdate();
-                rb.velocity = new Vector3(vectorX, rb.velocity.y, 0);
-                vectorX = -lastVectorX;
-
-                float x = Mathf.Clamp(transform.position.x, Mathf.Min(pointStart, pointFinish), Mathf.Max(pointStart, pointFinish));
-                transform.position = new Vector3(x, transform.position.y, transform.position.z);
-            }
-            rb.velocity = Vector3.zero;
-            transform.position = new Vector3(pointFinish, transform.position.y, transform.position.z);
-
-            if (transform.position.y > -0.03)
-            {
-                rb.velocity = new Vector3(rb.velocity.x, -5, rb.velocity.z);
-            }
-            isMoving = false;
-        }
-
-
-    /*private void OnCollisionEnter(Collision collision)
+    private IEnumerator MoveGo(float vectorX)
     {
-        if (collision.gameObject.CompareTag("Side"))
+        isMoving = true;
+        while (Mathf.Abs(pointStart - transform.position.x) < LaneOffset)
         {
-            MoveHorizontal(-lastVectorX);
+            yield return new WaitForFixedUpdate();
+            rb.velocity = new Vector3(vectorX, rb.velocity.y, 0);
+            vectorX = -lastVectorX;
+
+            float x = Mathf.Clamp(transform.position.x, Mathf.Min(pointStart, pointFinish), Mathf.Max(pointStart, pointFinish));
+            transform.position = new Vector3(x, transform.position.y, transform.position.z);
         }
-    }*/
+
+        rb.velocity = Vector3.zero;
+        transform.position = new Vector3(pointFinish, transform.position.y, transform.position.z);
+
+        if (transform.position.y > -0.03) rb.velocity = new Vector3(rb.velocity.x, -5, rb.velocity.z);
+        isMoving = false;
+    }
 }
-   

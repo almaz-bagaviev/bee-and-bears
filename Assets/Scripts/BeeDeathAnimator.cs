@@ -11,9 +11,6 @@ public class BeeDeathAnimator : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bear") || collision.gameObject.CompareTag("Let"))
-        {
-            AnimBee.SetBool("isDeath", true);
-        }
+        if (collision.gameObject.CompareTag("Bear") || collision.gameObject.CompareTag("Let")) AnimBee.SetBool("isDeath", true);
     }
 }

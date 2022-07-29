@@ -9,10 +9,8 @@ public class CreateNewGround : MonoBehaviour
 
     private void Update()
     {
-        if (nowBG.transform.position.z < 0f && newBG == null) //и если новый фон не создан
-            CreateBackground();
-        else if (newBG != null && newBG.transform.position.z < 0f)
-            CreateBackground();
+        if (nowBG.transform.position.z < 0f && newBG == null) CreateBackground();
+        else if (newBG != null && newBG.transform.position.z < 0f) CreateBackground();
     }
 
     private void CreateBackground()

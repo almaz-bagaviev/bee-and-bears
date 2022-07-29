@@ -3,16 +3,16 @@
 public class BearMove : MonoBehaviour
 {
     public float speed;
-    private Animator Anim;
+    private Animator anim;
 
     private void Awake()
     {
-        Anim = gameObject.GetComponent<Animator>();
+        anim = gameObject.GetComponent<Animator>();
     }
 
     private void Start()
     {
-        Anim.SetBool("isRunning", true);
+        anim.SetBool("isRunning", true);
     }
 
     private void Update()

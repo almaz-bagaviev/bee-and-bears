@@ -4,15 +4,8 @@ public class Bee : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            ToLeft();
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            ToRight();
-        }
+        if (Input.GetKeyDown(KeyCode.A)) ToLeft();
+        if (Input.GetKeyDown(KeyCode.D)) ToRight();
     }
 
     private void ToLeft()
